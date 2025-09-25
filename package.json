@@ -1,0 +1,21 @@
+{
+  "name": "napi-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "bin": {
+    "mini-napi": "main.js"
+  },
+  "scripts": {
+    "build": "tsc & npm link"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@types/node": "^24.5.2",
+    "tsc-clear": "^1.0.9"
+  },
+  "devDependencies": {}
+}
