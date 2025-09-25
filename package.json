@@ -17,5 +17,11 @@
     "@types/node": "^24.5.2",
     "tsc-clear": "^1.0.9"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "napi": {
+    "name": "index",
+    "triples": {
+      "default": true
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { MiniCache } from './rust-lib'
+import { MiniCache } from './index'
 
 const cache = new MiniCache()
 
