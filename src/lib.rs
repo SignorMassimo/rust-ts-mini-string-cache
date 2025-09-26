@@ -37,26 +37,27 @@ impl MiniCache {
 
     #[napi]
     pub fn set(&mut self, key: String, value: String) -> Result<bool> {
-        if let Some(v) = self.store.get_mut(&key) {
-            *v = value;
-            Ok(true)
-        } else {
-            Err(Error::new(
+        match self.store.get_mut(&key) {
+            Some(v) => {
+                *v = value;
+                Ok(true)
+            }
+            None => Err(Error::new(
                 Status::InvalidArg,
                 format!("unknown key '{}'", key),
-            ))
+            )),
         }
     }
 
     #[napi]
     pub fn get(&self, key: String) -> Result<String> {
-        if let Some(v) = self.store.get(&key) {
-            return Ok(v.clone());
+        match self.store.get(&key) {
+            Some(v) => Ok(v.clone()),
+            None => Err(Error::new(
+                Status::InvalidArg,
+                format!("unknown key '{}'", key),
+            )),
         }
-        Err(Error::new(
-            Status::InvalidArg,
-            format!("unknown key '{}'", key),
-        ))
     }
 
     #[napi]
