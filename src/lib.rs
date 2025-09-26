@@ -61,6 +61,47 @@ impl MiniCache {
     }
 
     #[napi]
+    pub fn filter(&self, keys: Vec<String>) -> Vec<CacheData> {
+        let filtered = self
+            .store
+            .iter()
+            .map(|(k, v)| {
+                if keys.contains(k) {
+                    CacheData {
+                        key: k.clone(),
+                        value: v.clone(),
+                    }
+                } else {
+                    CacheData {
+                        key: "".to_string(),
+                        value: "".to_string(),
+                    }
+                }
+            })
+            .collect();
+        filtered
+    }
+
+    #[napi]
+    pub fn has(&self, key: String) -> bool {
+        self.store.contains_key(&key)
+    }
+
+    #[napi]
+    pub fn delete(&mut self, key: String) -> Result<bool> {
+        match self.store.get(&key) {
+            Some(_) => {
+                self.store.remove(&key);
+                Ok(true)
+            }
+            None => Err(Error::new(
+                Status::InvalidArg,
+                format!("'{}' unknown key.", key),
+            )),
+        }
+    }
+
+    #[napi]
     pub fn all(&self) -> Vec<CacheData> {
         self.store
             .iter()

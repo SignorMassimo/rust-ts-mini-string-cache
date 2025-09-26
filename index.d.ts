@@ -5,6 +5,9 @@ export declare class MiniCache {
   add(key: string, value: string): boolean
   set(key: string, value: string): boolean
   get(key: string): string
+  filter(keys: Array<string>): Array<CacheData>
+  has(key: string): boolean
+  delete(key: string): boolean
   all(): Array<CacheData>
 }
 
