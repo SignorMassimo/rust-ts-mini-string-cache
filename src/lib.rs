@@ -25,7 +25,7 @@ impl MiniCache {
 
     #[napi]
     pub fn add(&mut self, key: String, value: String) -> Result<bool> {
-        if self.store.contains_key(&key.clone()) {
+        if self.store.contains_key(&key) {
             return Err(Error::new(
                 Status::InvalidArg,
                 format!("'{}' key already exists", key),
@@ -39,12 +39,12 @@ impl MiniCache {
     pub fn set(&mut self, key: String, value: String) -> Result<bool> {
         if let Some(v) = self.store.get_mut(&key) {
             *v = value;
-            return Ok(true);
+            Ok(true)
         } else {
-            return Err(Error::new(
+            Err(Error::new(
                 Status::InvalidArg,
                 format!("unknown key '{}'", key),
-            ));
+            ))
         }
     }
 
@@ -53,10 +53,10 @@ impl MiniCache {
         if let Some(v) = self.store.get(&key) {
             return Ok(v.clone());
         }
-        return Err(Error::new(
+        Err(Error::new(
             Status::InvalidArg,
             format!("unknown key '{}'", key),
-        ));
+        ))
     }
 
     #[napi]
